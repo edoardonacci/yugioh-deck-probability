@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a0f1c">
+<meta name="description" content="Calcola la probabilità di pescare almeno 2 Non-Engine in Yu-Gi-Oh!, prima e dopo il Side Deck.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Deck Probability">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="64x64" href="./icons/favicon-64.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
+<title>Yu-Gi-Oh! | Deck Probability</title>
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<main class="shell">
+  <div class="top"><div class="logo" aria-hidden="true"><svg width="37" height="37" viewBox="0 0 40 40" fill="none"><rect x="8" y="6" width="20" height="27" rx="3" stroke="white" stroke-width="2.3" transform="rotate(-13 8 6)"/><rect x="15" y="7" width="19" height="26" rx="3" stroke="white" stroke-width="2.3" fill="#ffffff19"/><path d="M24.5 12l-5.5 9H25l-3 7 8-11h-6.5l1-5z" fill="#D5FFF5"/></svg></div><div><div class="kicker">YU-GI-OH! · DECK BUILDING</div><h1>Non-Engine Probability</h1><p class="subtitle">Calcola la probabilità di pescare <strong>almeno 2 Non-Engine</strong>, prima e dopo il Side.</p></div></div>
+  <div class="controls"><div class="setup"><div class="group"><span class="label">Carte nel Main</span><div class="stepper"><button type="button" id="less" aria-label="Diminuisci carte">−</button><input type="number" id="total" min="40" max="60" step="1" value="40" aria-label="Carte nel Main Deck"><button type="button" id="more" aria-label="Aumenta carte">+</button></div></div><div class="group"><span class="label">Carte viste</span><div class="pill" role="group" aria-label="Dimensione della mano"><button type="button" id="hand5" aria-pressed="true">5 carte</button><button type="button" id="hand6" aria-pressed="false">6 carte</button></div></div></div><div class="actions"><button type="button" class="reset" id="install-action" hidden>↓ Installa</button><button type="button" class="reset" id="share">↗ Condividi</button><button type="button" class="reset" id="reset">↺ Ripristina valori</button></div></div>
+  <div class="status-line" aria-live="polite"><span class="status-dot" id="connectivity-dot"></span><span id="connectivity">Online</span><span aria-hidden="true">·</span><span id="offline-status">Modalità offline in preparazione</span></div>
+  <div class="grid">
+    <section class="panel pre" aria-label="Prima del side"><div class="panel-header"><div class="panel-heading"><span class="mark"></span><h2>Prima del Side</h2></div><span class="tag" id="pre-tag">40 carte</span></div><p class="desc">Composizione originale del Main Deck</p>
+      <div class="fields"><div class="field"><label for="pre-e">Engine</label><input class="count" id="pre-e" type="number" min="0" max="40" step="1" value="28" inputmode="numeric"></div><div class="field"><label for="pre-n">Non-Engine</label><input class="count" id="pre-n" type="number" min="0" max="40" step="1" value="12" inputmode="numeric"></div></div>
+      <div class="slider-caption"><span>Numero di Non-Engine</span><strong id="pre-slabel">12 / 40</strong></div><input id="pre-slider" type="range" min="0" max="40" value="12" step="1" aria-label="Non-Engine prima del Side">
+      <div class="comp"><span class="e" id="pre-engine-bar"></span><span class="n" id="pre-non-bar"></span></div><div class="legend"><span>Engine <b id="pre-e-label">28</b></span><span>Non-Engine <b id="pre-n-label">12</b></span></div>
+      <div class="output"><small>Probabilità di pescare almeno 2 Non-Engine</small><div class="number" id="pre-p">47,72%</div><div class="track"><div class="fill" id="pre-fill"></div></div></div>
+    </section>
+    <section class="panel post" aria-label="Dopo il side"><div class="panel-header"><div class="panel-heading"><span class="mark"></span><h2>Dopo il Side</h2></div><span class="tag" id="post-tag">40 carte</span></div><p class="desc">Composizione del Main Deck dopo le sostituzioni</p>
+      <div class="fields"><div class="field"><label for="post-e">Engine</label><input class="count" id="post-e" type="number" min="0" max="40" step="1" value="24" inputmode="numeric"></div><div class="field"><label for="post-n">Non-Engine</label><input class="count" id="post-n" type="number" min="0" max="40" step="1" value="16" inputmode="numeric"></div></div>
+      <div class="slider-caption"><span>Numero di Non-Engine</span><strong id="post-slabel">16 / 40</strong></div><input id="post-slider" type="range" min="0" max="40" value="16" step="1" aria-label="Non-Engine dopo il Side">
+      <div class="comp"><span class="e" id="post-engine-bar"></span><span class="n" id="post-non-bar"></span></div><div class="legend"><span>Engine <b id="post-e-label">24</b></span><span>Non-Engine <b id="post-n-label">16</b></span></div>
+      <div class="output"><small>Probabilità di pescare almeno 2 Non-Engine</small><div class="number" id="post-p">67,70%</div><div class="track"><div class="fill" id="post-fill"></div></div></div>
+    </section>
+  </div>
+  <section class="compare" aria-label="Confronto prima dopo"><div class="compare-grid"><div><h2>Impatto del Side Deck</h2><p id="comparison">Aggiungendo 4 Non-Engine, la probabilità di vederne almeno 2 aumenta.</p></div><div><div class="delta" id="delta">+19,98 pp</div><div class="delta-label">Differenza in punti percentuali</div></div></div></section>
+  <div class="note">Il calcolo usa la <strong>distribuzione ipergeometrica</strong>: estrazione casuale senza reinserimento. Si considerano sempre <strong>almeno 2</strong> carte Non-Engine, non esattamente 2. La composizione post-Side mantiene la stessa dimensione del Main Deck.</div>
+  <details class="install-help" id="install-help"><summary>Come installare l’app su iPhone, iPad o computer</summary><div class="help-body"><p><strong>iPhone e iPad:</strong> apri il link pubblico in Safari, tocca <strong>Condividi</strong> → <strong>Aggiungi alla schermata Home</strong> e conferma <strong>Apri come app</strong> se disponibile.</p><p><strong>Android:</strong> apri il link in Chrome e scegli <strong>Installa app</strong> oppure <strong>Aggiungi a schermata Home</strong>.</p><p><strong>Mac:</strong> in Safari apri il sito e usa <strong>File → Aggiungi al Dock</strong> (nelle versioni supportate).</p><p>Per usare la modalità offline, apri l’app online almeno una volta e attendi il caricamento. La disponibilità offline dipende anche dalla conservazione della cache del dispositivo.</p></div></details>
+  <footer class="foot"><span><strong>5 carte</strong> = mano iniziale standard · <strong>6 carte</strong> = mano dopo la prima pescata</span><span>Utilizzabile offline dopo il primo caricamento · Nessun account richiesto</span></footer>
+</main><div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<script src="./app.js" defer></script>
+</body>
+</html>
